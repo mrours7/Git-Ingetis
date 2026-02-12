@@ -18,6 +18,3 @@ jobs:
       - name: Deploy to nginx directory
         run: |
           rsync -av --delete ./ /var/www/git-ingetis/
-
-      - name: Reload nginx
-        run: sudo systemctl reload nginx
