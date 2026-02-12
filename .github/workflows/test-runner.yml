@@ -4,21 +4,28 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   test-runner:
+    name: Vérification runner self-hosted
     runs-on:
       - self-hosted
       - linux
       - x64
 
     steps:
-      - name: Vérification
+      - name: Test message
         run: echo "Test de fonctionnement du Runner !"
 
-      - name: Tests système
+      - name: Informations système
         run: |
           echo "Runner OK"
+          echo "Hostname:"
           hostname
+          echo "Utilisateur:"
           whoami
+          echo "Version Linux:"
           uname -a
+          echo "Date:"
+          date
