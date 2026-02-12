@@ -1,0 +1,27 @@
+name: CI - Tests HTML
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint / smoke tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+
+          grep -qi '<!doctype html' index.html
+          grep -qi '<html' index.html
+          grep -qi '<head' index.html
+          grep -qi '<body' index.html
+          grep -qi '<h1' index.html
+
+          echo "Tests basiques OK"
