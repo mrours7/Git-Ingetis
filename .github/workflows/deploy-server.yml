@@ -1,0 +1,23 @@
+name: CD - Deploy Server
+
+on:
+  workflow_run:
+    workflows: ["CI - Tests HTML"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to nginx directory
+        run: |
+          rsync -av --delete ./ /var/www/git-ingetis/
+
+      - name: Reload nginx
+        run: sudo systemctl reload nginx
